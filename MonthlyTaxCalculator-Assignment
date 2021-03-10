@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device.width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>MONTHLY TAX CALCULATOR</title>
+</head>
+
+<body>
+    <br />
+    <h1>MONTHLY TAX CALCULATOR</h1>
+    
+    <div class="container">
+        <form class=" user-input ">
+            <div class="form-group">
+                <label class="control-label"> Status </label>
+                <select name="taxpayerType" id="taxpayerType" class="form-control">
+                    <option item="un-married" value="unMarried">Unmarried</option>
+                    <option item="married" value="married">Married</option>
+              </select>
+            </div>
+
+            <div class="form-group ">
+                <label>Monthly Income</label>
+                <input type="number " id="monthly-income" autocomplete="off">
+            </div>
+            
+            <div class="buttons">
+                <div class="form-group">
+                    <button name="data" type="button" onclick="calculateTax()">Calculate</button>
+                </div>
+            </div>
+            <hr/>
+            
+            <div class="form-group ">
+                <label>Yearly Income</label>
+                <input type="number" id="yearly-income" disabled>
+            </div>
+
+            <div class="form-group ">
+                <label>Yearly Tax</label>
+                <input type="number" id="yearly-tax" disabled>
+            </div>
+
+            <div class="form-group ">
+                <label>Monthly Tax</label>
+                <input type="number" id="monthly-tax" disabled>
+            </div>
+
+            <div class="buttons">
+                <div class="form-group">
+                    <button class="btn btn-primary reset "  onclick="reset()">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    </div>
+    </form>
+    </div>
+
+</body>
+
+<script>
+    const unMarriedAmountMapTaxRate = {
+            first : 400000,
+            second:100000,
+            third:200000,
+            fourth:1300000,
+        }
+
+        const marriedAmountMapTaxRate = {
+            first : 450000,
+            second:100000,
+            third:200000,
+            fourth:1250000,
+        }
+
+    function calculateTax(){
+        const maritalStatus = document.getElementById("taxpayerType").value;
+        const monthlyIncome = document.getElementById("monthly-income").value;
+        const yearlyIncome = monthlyIncome * 12;
+        
+        let amountMapTaxRate = unMarriedAmountMapTaxRate
+        if(maritalStatus === 'married'){
+            amountMapTaxRate = marriedAmountMapTaxRate
+        }
+
+        let yearlyTaxAbleAmount = 0
+        let RemainingAmount = yearlyIncome;
+
+        yearlyTaxAbleAmount += (1/100) * yearlyIncome;
+
+        remainingAmount = yearlyIncome -amountMapTaxRate.first;
+
+        if(remainingAmount > 0){
+            if(remainingAmount <= amountMapTaxRate.second){
+                yearlyTaxAbleAmount += (10/100) * remainingAmount;
+            }else if(remainingAmount <= amountMapTaxRate.third){
+                yearlyTaxAbleAmount += (20/100) * remainingAmount;
+            }else if(remainingAmount <= amountMapTaxRate.fourth){
+                yearlyTaxAbleAmount += (30/100) * remainingAmount;
+            }else{
+                yearlyTaxAbleAmount += (36/100) * remainingAmount;
+            }
+        } 
+        showResult(yearlyIncome,yearlyTaxAbleAmount);
+    }
+
+    function showResult(yearlyIncome,yearlyTaxAbleAmount){
+        document.getElementById("yearly-income").value = yearlyIncome
+        document.getElementById("yearly-tax").value = yearlyTaxAbleAmount
+        document.getElementById("monthly-tax").value = yearlyTaxAbleAmount/12
+
+    }
+
+    function reset(){
+        document.getElementById("taxpayerType").value = "un-married";
+     document.getElementById("monthly-income").value="";
+        document.getElementById("yearly-income").value = ""
+        document.getElementById("yearly-tax").value =""
+        document.getElementById("monthly-tax").value = ""
+    }
+
+</script>
+</html>
