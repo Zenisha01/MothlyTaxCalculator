@@ -11,7 +11,7 @@
 <body>
     <br />
     <h1>MONTHLY TAX CALCULATOR</h1>
-    
+
     <div class="container">
         <form class=" user-input ">
             <div class="form-group">
@@ -26,14 +26,14 @@
                 <label>Monthly Income</label>
                 <input type="number " id="monthly-income" autocomplete="off">
             </div>
-            
+
             <div class="buttons">
                 <div class="form-group">
                     <button name="data" type="button" onclick="calculateTax()">Calculate</button>
                 </div>
             </div>
             <hr/>
-            
+
             <div class="form-group ">
                 <label>Yearly Income</label>
                 <input type="number" id="yearly-income" disabled>
@@ -51,7 +51,7 @@
 
             <div class="buttons">
                 <div class="form-group">
-                    <button class="btn btn-primary reset "  onclick="reset()">Reset</button>
+                    <button class="btn btn-primary reset " onclick="reset()">Reset</button>
                 </div>
             </div>
         </form>
@@ -65,64 +65,64 @@
 
 <script>
     const unMarriedAmountMapTaxRate = {
-            first : 400000,
-            second:100000,
-            third:200000,
-            fourth:1300000,
-        }
+        first: 400000,
+        second: 100000,
+        third: 200000,
+        fourth: 1300000,
+    }
 
-        const marriedAmountMapTaxRate = {
-            first : 450000,
-            second:100000,
-            third:200000,
-            fourth:1250000,
-        }
+    const marriedAmountMapTaxRate = {
+        first: 450000,
+        second: 100000,
+        third: 200000,
+        fourth: 1250000,
+    }
 
-    function calculateTax(){
+    function calculateTax() {
         const maritalStatus = document.getElementById("taxpayerType").value;
         const monthlyIncome = document.getElementById("monthly-income").value;
         const yearlyIncome = monthlyIncome * 12;
-        
+
         let amountMapTaxRate = unMarriedAmountMapTaxRate
-        if(maritalStatus === 'married'){
+        if (maritalStatus === 'married') {
             amountMapTaxRate = marriedAmountMapTaxRate
         }
 
         let yearlyTaxAbleAmount = 0
         let RemainingAmount = yearlyIncome;
 
-        yearlyTaxAbleAmount += (1/100) * yearlyIncome;
+        yearlyTaxAbleAmount += (1 / 100) * yearlyIncome;
 
-        remainingAmount = yearlyIncome -amountMapTaxRate.first;
+        remainingAmount = yearlyIncome - amountMapTaxRate.first;
 
-        if(remainingAmount > 0){
-            if(remainingAmount <= amountMapTaxRate.second){
-                yearlyTaxAbleAmount += (10/100) * remainingAmount;
-            }else if(remainingAmount <= amountMapTaxRate.third){
-                yearlyTaxAbleAmount += (20/100) * remainingAmount;
-            }else if(remainingAmount <= amountMapTaxRate.fourth){
-                yearlyTaxAbleAmount += (30/100) * remainingAmount;
-            }else{
-                yearlyTaxAbleAmount += (36/100) * remainingAmount;
+        if (remainingAmount > 0) {
+            if (remainingAmount <= amountMapTaxRate.second) {
+                yearlyTaxAbleAmount += (10 / 100) * remainingAmount;
+            } else if (remainingAmount <= amountMapTaxRate.third) {
+                yearlyTaxAbleAmount += (20 / 100) * remainingAmount;
+            } else if (remainingAmount <= amountMapTaxRate.fourth) {
+                yearlyTaxAbleAmount += (30 / 100) * remainingAmount;
+            } else {
+                yearlyTaxAbleAmount += (36 / 100) * remainingAmount;
             }
-        } 
-        showResult(yearlyIncome,yearlyTaxAbleAmount);
+        }
+        showResult(yearlyIncome, yearlyTaxAbleAmount);
     }
 
-    function showResult(yearlyIncome,yearlyTaxAbleAmount){
+    function showResult(yearlyIncome, yearlyTaxAbleAmount) {
         document.getElementById("yearly-income").value = yearlyIncome
         document.getElementById("yearly-tax").value = yearlyTaxAbleAmount
-        document.getElementById("monthly-tax").value = yearlyTaxAbleAmount/12
+        document.getElementById("monthly-tax").value = yearlyTaxAbleAmount / 12
 
     }
 
-    function reset(){
+    function reset() {
         document.getElementById("taxpayerType").value = "un-married";
-     document.getElementById("monthly-income").value="";
+        document.getElementById("monthly-income").value = "";
         document.getElementById("yearly-income").value = ""
-        document.getElementById("yearly-tax").value =""
+        document.getElementById("yearly-tax").value = ""
         document.getElementById("monthly-tax").value = ""
     }
-
 </script>
+
 </html>
